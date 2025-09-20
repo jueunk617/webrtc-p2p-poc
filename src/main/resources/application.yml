@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: webrtc-signaling-server
+  
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    com.study.webrtc: DEBUG
+    org.springframework.web.socket: DEBUG
+    org.springframework.messaging: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  webrtc:
+    mode: p2p
+    max-participants: 6
+    allowed-origins:
+      - "http://localhost:3000"
+      - "http://localhost:8000"
+      - "http://127.0.0.1:8000"
+      - "http://127.0.0.1:3000"
+
+  monitoring:
+    enabled: true
+    stats-interval: 5s
