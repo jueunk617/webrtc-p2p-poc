@@ -15,9 +15,6 @@ import java.util.List;
 @Slf4j
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${app.webrtc.allowed-origins}")
-    private List<String> allowedOrigins;
-
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // 메시지 브로커 설정 (인메모리 브로커)
@@ -36,12 +33,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // WebSocket endpoint 등록
         registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns(allowedOrigins.toArray(new String[0]))
+                .setAllowedOriginPatterns("*")  // 모든 Origin 허용
                 .withSockJS()  // SockJS fallback 옵션 활성화
                 .setHeartbeatTime(25000)  // heartbeat 간격 설정
                 .setDisconnectDelay(5000);  // 연결 해제 대기 시간
 
-        log.info("✅ STOMP Endpoint 등록 완료 - /ws");
-        log.info("✅ 허용된 Origins: {}", allowedOrigins);
+        log.info("✅ STOMP Endpoint 등록 완료 - /ws (모든 Origin 허용)");
     }
 }
