@@ -147,6 +147,5 @@ messagingTemplate.convertAndSendToUser(userId, "/queue/webrtc", message);
 // After (성공)
 signalData.put("targetUserId", targetUserId);
 messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
-messagingTemplate.convertAndSend("/topic/room/" + roomId, message);
-
 ```
+
