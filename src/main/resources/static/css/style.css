@@ -1,0 +1,434 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f8f9fa;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 헤더 */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+/* 섹션 공통 스타일 */
+.control-panel,
+.status-section,
+.performance-section,
+.video-section,
+.guide-section,
+.log-section {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 컨트롤 패널 */
+.control-panel {
+    background: #ffffff;
+    border-left: 4px solid #007bff;
+}
+
+.input-group {
+    display: inline-block;
+    margin: 10px 20px 10px 0;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 14px;
+}
+
+.input-group input {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 200px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 4px 8px 4px 0;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.button.primary {
+    background: #007bff;
+    color: white;
+}
+
+.button.primary:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+.button.danger {
+    background: #dc3545;
+    color: white;
+}
+
+.button.danger:hover:not(:disabled) {
+    background: #c82333;
+}
+
+.button.secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.button.secondary:hover:not(:disabled) {
+    background: #545b62;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 상태 표시 */
+.status-section {
+    border-left: 4px solid #28a745;
+}
+
+.status {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.status.connected {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status.disconnected {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.participants {
+    background: #fff3cd;
+    color: #856404;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid #ffeaa7;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* 성능 모니터링 */
+.performance-section {
+    border-left: 4px solid #17a2b8;
+}
+
+.performance-section h3,
+.video-section h3,
+.guide-section h3,
+.log-section h3 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e9ecef;
+    transition: box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* 비디오 섹션 */
+.video-section {
+    border-left: 4px solid #6f42c1;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.video-container {
+    position: relative;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+}
+
+.video-container.local {
+    border: 2px solid #007bff;
+}
+
+.video-container video {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.video-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+.control-btn {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.control-btn:hover {
+    background: rgba(0,0,0,0.9);
+}
+
+/* 가이드 섹션 */
+.guide-section {
+    border-left: 4px solid #ffc107;
+}
+
+.test-steps {
+    padding-left: 20px;
+    color: #495057;
+}
+
+.test-steps li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* 로그 섹션 */
+.log-section {
+    border-left: 4px solid #6c757d;
+}
+
+.log-container {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 16px;
+    border-radius: 6px;
+    height: 300px;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    border: 1px solid #4a5568;
+}
+
+.log-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: #4a5568;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: #718096;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* 성능 경고 */
+.performance-warning {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #dc3545;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: 500;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .input-group {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .input-group input {
+        width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+    }
+
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .control-panel,
+    .status-section,
+    .performance-section,
+    .video-section,
+    .guide-section,
+    .log-section {
+        padding: 16px;
+    }
+}
+
+/* 포커스 접근성 */
+.button:focus,
+.input-group input:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f3f4;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}

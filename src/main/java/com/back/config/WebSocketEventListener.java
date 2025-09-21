@@ -29,7 +29,19 @@ public class WebSocketEventListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
 
-        log.info("WebSocket 연결 성공 - Session: {}", sessionId);
+        // 연결 헤더에서 사용자 정보 추출
+        String userId = headerAccessor.getFirstNativeHeader("userId");
+        String roomId = headerAccessor.getFirstNativeHeader("roomId");
+
+        // 세션에 사용자 정보 저장
+        if (userId != null && roomId != null) {
+            headerAccessor.getSessionAttributes().put("userId", userId);
+            headerAccessor.getSessionAttributes().put("roomId", roomId);
+            log.info("WebSocket 연결 성공 - Session: {}, User: {}, Room: {}",
+                    sessionId, userId, roomId);
+        } else {
+            log.info("WebSocket 연결 성공 - Session: {}", sessionId);
+        }
     }
 
     // WebSocket 연결 해제 이벤트

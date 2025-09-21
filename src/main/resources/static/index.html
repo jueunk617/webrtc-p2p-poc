@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 P2P WebRTC 성능 테스트</title>
+
+    <!-- 외부 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <!-- 스타일 -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1>🎯 P2P WebRTC 성능 테스트</h1>
+    </header>
+
+    <!-- 연결 컨트롤 -->
+    <div class="control-panel">
+        <div class="input-group">
+            <label for="userId">사용자 ID:</label>
+            <input type="text" id="userId" placeholder="user1" />
+        </div>
+        <div class="input-group">
+            <label for="roomId">방 ID:</label>
+            <input type="text" id="roomId" placeholder="test-room" />
+        </div>
+        <div class="button-group">
+            <button class="button primary" onclick="joinRoom()">방 입장</button>
+            <button class="button danger" onclick="leaveRoom()" disabled id="leaveBtn">방 나가기</button>
+            <button class="button secondary" onclick="toggleAudio()" disabled id="audioBtn">🎤 음소거</button>
+            <button class="button secondary" onclick="toggleVideo()" disabled id="videoBtn">📹 비디오</button>
+        </div>
+    </div>
+
+    <!-- 상태 표시 -->
+    <div class="status-section">
+        <div id="connectionStatus" class="status disconnected">🔴 연결 안됨</div>
+        <div id="participantInfo" class="participants">참여자: 없음</div>
+    </div>
+
+    <!-- 성능 모니터링 -->
+    <div class="performance-section">
+        <h3>📊 실시간 성능 모니터링</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">연결 수</div>
+                <div class="stat-value" id="connectionCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">메모리</div>
+                <div class="stat-value" id="memoryUsage">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">네트워크 송신</div>
+                <div class="stat-value" id="networkOut">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">네트워크 수신</div>
+                <div class="stat-value" id="networkIn">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">평균 지연시간</div>
+                <div class="stat-value" id="avgLatency">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">품질 상태</div>
+                <div class="stat-value" id="qualityStatus">-</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비디오 그리드 -->
+    <div class="video-section">
+        <h3>🎥 비디오 스트림</h3>
+        <div class="video-grid" id="videoGrid">
+            <div class="video-container local">
+                <video id="localVideo" autoplay muted playsinline></video>
+                <div class="video-label">나 (로컬)</div>
+                <div class="video-controls">
+                    <button class="control-btn" onclick="toggleLocalAudio()">🎤</button>
+                    <button class="control-btn" onclick="toggleLocalVideo()">📹</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 테스트 가이드 -->
+    <div class="guide-section">
+        <h3>📝 테스트 가이드</h3>
+        <ol class="test-steps">
+            <li>사용자 ID와 방 ID를 입력하고 "방 입장" 클릭</li>
+            <li>다른 브라우저 탭/창에서 같은 방에 추가 참여자 입장</li>
+            <li>성능 지표 모니터링하면서 최대 6명까지 테스트</li>
+            <li>CPU 사용률, 네트워크 사용량, 지연시간 확인</li>
+            <li>끊김 현상이나 품질 저하 발생 시점 기록</li>
+        </ol>
+    </div>
+
+    <!-- 로그 섹션 -->
+    <div class="log-section">
+        <h3>📋 실시간 로그</h3>
+        <div class="log-container" id="logContainer"></div>
+        <button class="button secondary" onclick="clearLogs()">로그 지우기</button>
+    </div>
+</div>
+
+<!-- JavaScript 파일들 -->
+<script src="/js/websocket-client.js"></script>
+<script src="/js/webrtc-client.js"></script>
+<script src="/js/performance-monitor.js"></script>
+
+<script>
+    // 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+        log('🚀 P2P WebRTC PoC 준비 완료');
+        log('📍 백엔드 서버: http://localhost:8080');
+        log('📡 WebSocket: ws://localhost:8080/ws');
+
+        // 기본값 설정
+        document.getElementById('userId').value = 'user-' + Math.floor(Math.random() * 1000);
+        document.getElementById('roomId').value = 'test-room';
+    });
+
+    // 로그 지우기
+    function clearLogs() {
+        document.getElementById('logContainer').innerHTML = '';
+        log('🗑️ 로그가 지워졌습니다.');
+    }
+</script>
+</body>
+</html>

@@ -129,17 +129,19 @@ public class WebRTCController { // WebRTC 시그널링 컨트롤러
                 return;
             }
 
+            // 방 토픽으로 WebRTC 시그널 전송
+            Map<String, Object> signalData = new HashMap<>();
+            signalData.put("signalType", "offer");
+            signalData.put("targetUserId", offer.getToUserId());
+            signalData.put("sdp", offer.getSdp());
+
             SignalMessage signalMessage = SignalMessage.builder()
-                    .type("offer")
+                    .type("webrtc-signal")
                     .fromUserId(offer.getFromUserId())
-                    .toUserId(offer.getToUserId())
-                    .data(Map.of(
-                            "sdp", offer.getSdp(),
-                            "roomId", offer.getRoomId()
-                    ))
+                    .data(signalData)
                     .build();
 
-            messagingTemplate.convertAndSendToUser(offer.getToUserId(), "/queue/webrtc", signalMessage);
+            messagingTemplate.convertAndSend("/topic/room/" + offer.getRoomId(), signalMessage);
 
             log.debug("Offer 중계 완료 - From: {} To: {}", offer.getFromUserId(), offer.getToUserId());
 
@@ -160,17 +162,19 @@ public class WebRTCController { // WebRTC 시그널링 컨트롤러
                 return;
             }
 
+            // 방 토픽으로 WebRTC 시그널 전송
+            Map<String, Object> signalData = new HashMap<>();
+            signalData.put("signalType", "answer");
+            signalData.put("targetUserId", answer.getToUserId());
+            signalData.put("sdp", answer.getSdp());
+
             SignalMessage signalMessage = SignalMessage.builder()
-                    .type("answer")
+                    .type("webrtc-signal")
                     .fromUserId(answer.getFromUserId())
-                    .toUserId(answer.getToUserId())
-                    .data(Map.of(
-                            "sdp", answer.getSdp(),
-                            "roomId", answer.getRoomId()
-                    ))
+                    .data(signalData)
                     .build();
 
-            messagingTemplate.convertAndSendToUser(answer.getToUserId(), "/queue/webrtc", signalMessage);
+            messagingTemplate.convertAndSend("/topic/room/" + answer.getRoomId(), signalMessage);
 
             log.debug("Answer 중계 완료 - From: {} To: {}", answer.getFromUserId(), answer.getToUserId());
 
@@ -192,19 +196,21 @@ public class WebRTCController { // WebRTC 시그널링 컨트롤러
                 return;
             }
 
+            // 방 토픽으로 WebRTC 시그널 전송
+            Map<String, Object> signalData = new HashMap<>();
+            signalData.put("signalType", "ice-candidate");
+            signalData.put("targetUserId", candidate.getToUserId());
+            signalData.put("candidate", candidate.getCandidate());
+            signalData.put("sdpMid", candidate.getSdpMid());
+            signalData.put("sdpMLineIndex", candidate.getSdpMLineIndex());
+
             SignalMessage signalMessage = SignalMessage.builder()
-                    .type("ice-candidate")
+                    .type("webrtc-signal")
                     .fromUserId(candidate.getFromUserId())
-                    .toUserId(candidate.getToUserId())
-                    .data(Map.of(
-                            "candidate", candidate.getCandidate(),
-                            "sdpMid", candidate.getSdpMid(),
-                            "sdpMLineIndex", candidate.getSdpMLineIndex(),
-                            "roomId", candidate.getRoomId()
-                    ))
+                    .data(signalData)
                     .build();
 
-            messagingTemplate.convertAndSendToUser(candidate.getToUserId(), "/queue/webrtc", signalMessage);
+            messagingTemplate.convertAndSend("/topic/room/" + candidate.getRoomId(), signalMessage);
 
         } catch (Exception e) {
             log.error("ICE Candidate 중계 실패 - From: {} To: {}, Error: {}",
@@ -242,7 +248,7 @@ public class WebRTCController { // WebRTC 시그널링 컨트롤러
         return true;
     }
 
-    // 에러 메시지 전송
+    // 사용자에게 에러 메시지 전송
     private void sendErrorToUser(String userId, String errorCode, String message, String sessionId) {
         ErrorMessage errorMessage = ErrorMessage.of("ROOM_ERROR", message, errorCode);
 
